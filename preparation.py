@@ -14,7 +14,9 @@ def prepare_data(PATH):
     """
     # Load data and convert time
     df = pd.read_json(PATH, convert_dates=['time'])
-    
+
+    # Change timezone from UTC to mine
+    df["time"] = df["time"].dt.tz_convert('Europe/Kiev')
     # Drop unimportant columns
     df.drop(["header", "titleUrl", "products", "activityControls", "description", "details"], axis=1, inplace=True)
     # Remove "Watched " from every row of column "title"
