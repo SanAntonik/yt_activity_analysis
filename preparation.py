@@ -40,3 +40,31 @@ def prepare_data(PATH):
     cols = [cols[0]] + [cols[2]] + [cols[1]]
     df = df[cols]
     return df
+
+
+def select_by_date_interval(df, start, end=""):
+    """
+    Summary:
+        Select a subset of a df based on the specified
+        time interval.
+        Important: input points of the interval
+        must be in the year-month-day format.
+        For example, 2022-07-15 that corresponds to
+        July 15, 2022
+
+    Args:
+        df (df): DataFrame
+        start (str): start date
+        end (str, optional): end date. Defaults to "".
+
+    Returns:
+        df (df): subset of input DataFrame
+    """
+    # check whether you passed the starting date
+    if not start:
+        raise ValueError("You didn't specify the starting point")
+    # if you didn't pass the ending date, use the most recent one
+    if not end:
+        end = df["time"].iloc[0] 
+    mask = (df['time'] > start) & (df['time'] <= end)
+    return df.loc[mask]
