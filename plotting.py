@@ -16,7 +16,7 @@ def get_videos_per_h_series(df, channel_name=""):
     # change NaN to 0
     series = series.fillna(0)
     # change dtype to int and return
-    return series.astype(int)   
+    return series.astype(int)
 
 
 def bar_plot_videos_per_h(series, channel_name=""):
