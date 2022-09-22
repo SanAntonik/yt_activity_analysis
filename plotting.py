@@ -33,7 +33,7 @@ def month_bar_plot(df, channel_name=""):
                     xlabel="hour", ylabel="videos per month")
 
 
-def get_videos_per_month(df, channel_name):
+def get_videos_per_month(df, channel_name=""):
     if not channel_name:
         # Per every row get month of recording. Then count values
         videos_per_month = df['time'].dt.strftime('%b').value_counts()
