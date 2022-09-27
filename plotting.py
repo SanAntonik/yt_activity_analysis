@@ -39,9 +39,30 @@ def get_videos_per_month(df, channel_name=""):
         videos_per_month = df['time'].dt.strftime('%b').value_counts()
     else:
         df_for_channel = df.loc[df["channel_name"] == channel_name]
-        videos_per_month = df_for_channel['time'].dt.strftime('%b').value_counts()
-    str_months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        videos_per_month = df_for_channel['time'].dt.strftime(
+            '%b').value_counts()
+    str_months = ["Jan", "Feb", "Mar", "Apr", "May",
+                  "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     # Add empty months
     videos_per_month = videos_per_month.reindex(str_months, axis=0)
     # Change NaN in those empty months to 0. Then change dtype to int
     return videos_per_month.fillna(0).astype(int)
+
+
+def stacked_bar_with_labels(df, float_num=False, bar_width=0.5):
+    if float_num:
+        ylabel = "Percentage"
+    else:
+        ylabel = "Count"
+    ax = df.plot.bar(rot=0, stacked=True, xlabel="Month",
+                     ylabel=ylabel, width=bar_width)
+    # big thanks to https://stackoverflow.com/questions/41296313/stacked-bar-chart-with-centered-labels/60895640#60895640
+    for c in ax.containers:
+        # Optional: if the segment is small or 0, customize the labels
+        if not float_num:
+            labels = [int(v.get_height()) if v.get_height()
+                      > 0 else "" for v in c]
+        else:
+            labels = [v.get_height() if v.get_height() > 0 else "" for v in c]
+        # remove the labels parameter if it's not needed for customized labels
+        ax.bar_label(c, labels=labels, label_type='center')
