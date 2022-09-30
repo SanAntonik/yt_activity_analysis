@@ -28,6 +28,8 @@ def prepare_data(PATH):
     # Create a new col with channels names inside based on 'subtitles' col
     df["channel_name"] = [df["subtitles"][row][0]["name"]
                           for row in range(df.shape[0])]
+    # Remove ' - Topic' from the names of YouTube Mucis channels
+    df["channel_name"] = df["channel_name"].str.replace(" - Topic", "")
     # Drop not needed now 'subtitles' col
     df.drop(["subtitles"], axis=1, inplace=True)
     # Change dtypes of cols 'title' and 'channel_name' from object to string
