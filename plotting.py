@@ -30,7 +30,7 @@ def month_bar_plot(df, channel_name=""):
     series = get_videos_per_month(df, channel_name)
     series.plot.bar(color="purple", rot=0,
                     title=f"{channel_name}",
-                    xlabel="hour", ylabel="videos per month")
+                    xlabel="month", ylabel="videos per month")
 
 
 def get_videos_per_month(df, channel_name=""):
