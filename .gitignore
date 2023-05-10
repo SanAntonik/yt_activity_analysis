@@ -1,4 +1,5 @@
-data
+data/
+notes/
 __pycache__/
 *.code-workspace
 *.txt
